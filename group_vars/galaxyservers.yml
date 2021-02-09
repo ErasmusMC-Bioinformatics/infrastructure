@@ -35,6 +35,7 @@ galaxy_config:
     check_migrate_tools: false
     tool_data_path: "{{ galaxy_mutable_data_dir }}/tool-data"
     job_config_file: "{{ galaxy_config_dir }}/job_conf.xml"
+    user_preferences_extra_conf_path: "{{ galaxy_config_dir }}/user_preferences.yml"
     id_secret: "{{ id_secret }}"
     tool_data_table_config_path: /cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml,/cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml
     object_store_store_by: uuid
@@ -81,6 +82,8 @@ galaxy_config:
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.xml.j2
     dest: "{{ galaxy_config.galaxy.job_config_file }}"
+  - src: templates/galaxy/config/user_preferences_extra_conf.yml
+    dest: "{{ galaxy_config.galaxy.user_preferences_extra_conf_path }}"
 
 # systemd
 galaxy_systemd_mode: mule
