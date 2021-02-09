@@ -21,6 +21,9 @@
     - galaxyproject.galaxy
     - role: uchida.miniconda
       become: true
-      become_user: galaxy
+      become_user: "{{ galaxy_user.name }}"
     - usegalaxy_eu.galaxy_systemd
+    - usegalaxy_eu.gxadmin
     - galaxyproject.nginx
+    - galaxyproject.cvmfs
+    - influxdata.chrony
