@@ -1,0 +1,2 @@
+[galaxyservers]
+bioinf-galactus ansible_user=bioinf ansible_connection=local
