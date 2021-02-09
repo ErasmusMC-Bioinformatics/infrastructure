@@ -16,5 +16,7 @@
   version: 0.1.5
 - src: galaxyproject.cvmfs
   version: 0.2.13
+- src: influxdata.chrony
+  version: master
 - src: usegalaxy_eu.gxadmin
   version: 0.0.3
