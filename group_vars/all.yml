@@ -1,0 +1,32 @@
+# CVMFS vars
+cvmfs_role: client
+galaxy_cvmfs_repos_enabled: config-repo
+cvmfs_quota_limit: 500
+
+# telegraf
+telegraf_agent_package_state: latest
+telegraf_agent_output:
+  - type: influxdb
+    config:
+    - urls = ["http://127.0.0.1:8086"]
+    - database = "telegraf"
+telegraf_plugins_default:
+  - plugin: cpu
+    config:
+      - percpu = true
+  - plugin: disk
+  - plugin: kernel
+  - plugin: processes
+  - plugin: io
+  - plugin: mem
+  - plugin: system
+  - plugin: swap
+  - plugin: net
+  - plugin: netstat
+  - plugin: chrony
+
+# Golang
+golang_gopath: '/opt/workspace-go'
+# Singularity target version
+singularity_version: "3.7.0"
+singularity_go_path: "{{ golang_install_dir }}"
