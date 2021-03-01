@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for repo__version in $(ansible-galaxy list | awk '{gsub(", ", "\t"); print $2"__"$3}'); do
+for repo__version in $(ansible-galaxy role list -p roles | awk '{gsub(", ", "\t"); print $2"__"$3}'); do
 	vers="$(echo "$repo__version" | sed 's/.*__//g')"
 	repo="$(echo "$repo__version" | sed 's/__.*//g')"
 

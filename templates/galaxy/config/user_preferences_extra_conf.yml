@@ -1,15 +1,4 @@
 preferences:
-    ega_account:
-        description: Your EGA (European Genome Archive) account
-        inputs:
-            - name: username
-              label: Username
-              type: text
-              required: False
-            - name: password
-              label: Password
-              type:  password
-              required: False
     use_cached_job:
       description: Do you want to be able to re-use previously run jobs ?
       inputs:
@@ -33,3 +22,47 @@ preferences:
                   - [English, en]
                   - [French, fr]
                   - [Japanese, ja]
+
+    ega_account:
+        description: Your EGA (European Genome Archive) account
+        inputs:
+            - name: username
+              label: Username
+              type: text
+              required: False
+            - name: password
+              label: Password
+              type:  password
+              required: False
+
+    dropbox:
+        description: Your Dropbox account
+        inputs:
+            - name: access_token
+              label: Dropbox access token
+              type: password
+              required: False
+
+    b2drop:
+        description: Your B2DROP account (https://b2drop.eudat.eu/)
+        inputs:
+            - name: username
+              label: Username
+              type: text
+              required: False
+            - name: password
+              label: Password
+              type:  password
+              required: False
+
+    ena_webin_account:
+        description: Your ENA Webin account details
+        inputs:
+            - name: webin_id
+              label: ENA Webin ID
+              type: text
+              required: False
+            - name: password
+              label: Password
+              type:  password
+              required: False

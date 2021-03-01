@@ -1,5 +1,5 @@
 - src: galaxyproject.galaxy
-  version: 0.9.7
+  version: 0.9.11
 - src: galaxyproject.nginx
   version: 0.6.4
 - src: galaxyproject.postgresql
@@ -14,8 +14,14 @@
   version: 0.1.4
 - src: usegalaxy_eu.certbot
   version: 0.1.5
+- src: cyverse-ansible.singularity
+  version: 048c4f178077d05c1e67ae8d9893809aac9ab3b7
+- src: gantsign.golang
+  version: 2.6.3
 - src: galaxyproject.cvmfs
   version: 0.2.13
+- src: dj-wasabi.telegraf
+  version: 0.13.0
 - src: influxdata.chrony
   version: master
 - src: usegalaxy_eu.gxadmin
