@@ -91,6 +91,8 @@ galaxy_config:
     farm: job-handlers:1,2
 
 galaxy_config_templates:
+  - src: templates/galaxy/config/job_metrics_conf.xml.j2
+    dest: "{{ galaxy_config.galaxy.job_metrics_config_file }}"
   - src: templates/galaxy/config/job_conf.xml.j2
     dest: "{{ galaxy_config.galaxy.job_config_file }}"
   - src: templates/galaxy/config/user_preferences_extra_conf.yml
@@ -126,3 +128,22 @@ nginx_servers:
 nginx_enable_default_server: false
 nginx_conf_http:
   client_max_body_size: 1g
+
+# HTCondor
+condor_host: "bioinf-galactus"
+condor_allow_write: "bioinf-galactus,bioinf-galaxian"
+condor_roles:
+    - execute
+    - central-manager
+    - submit
+condor_allow_negotiator: '$(ALLOW_WRITE)'
+condor_allow_administrator: "$(ALLOW_WRITE)"
+condor_network_interface: "{{ ansible_default_ipv4.interface }}"
+condor_fs_domain: emc-bioinf
+condor_uid_domain: emc-bioinf
+condor_trust_uid_domain: 'True'
+condor_extra: |
+    SLOT_TYPE_1 = cpus=1, ram=8
+    NUM_SLOTS_TYPE_1 = 28
+    COLLECTOR_NAME = "ATGM Cluster"
+    CGROUP_MEMORY_LIMIT_POLICY = soft

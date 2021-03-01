@@ -1,10 +1,16 @@
 <job_conf>
-    <plugins workers="4">
-        <plugin id="local_plugin" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner"/>
-    </plugins>
-    <destinations default="local_destination">
-        <destination id="local_destination" runner="local_plugin"/>
-    </destinations>
-    <tools>
-    </tools>
+	<plugins workers="4">
+		<plugin id="local_plugin" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner"/>
+		<plugin id="condor" type="runner" load="galaxy.jobs.runners.condor:CondorJobRunner"/>
+	</plugins>
+	<destinations default="local_destination">
+		<destination id="local_destination" runner="condor"/>
+	</destinations>
+	<tools>
+	</tools>
+	<limits>
+		<limit type="registered_user_concurrent_jobs">4</limit>
+		<limit type="walltime">24:00:00</limit>
+		<limit type="output_size">50GB</limit>
+	</limits>
 </job_conf>
