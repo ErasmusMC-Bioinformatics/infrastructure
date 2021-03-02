@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<OIDC>
+	<provider name="Elixir">
+		<client_id>{{ vault_elixir_aai.client_id }}</client_id>
+		<client_secret>{{ vault_elixir_aai.client_secret }}</client_secret>
+		<redirect_uri>http://bioinf-galactus/authnz/elixir/callback</redirect_uri>
+		<prompt>consent</prompt>
+	</provider>
+</OIDC>
