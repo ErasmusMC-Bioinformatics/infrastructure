@@ -1,7 +1,12 @@
-galaxy: roles
+all: help
+
+nginx: roles ## Deploy just NGINX configuration
+	ansible-playbook galaxy.yml --diff --extra-vars "__galaxy_dir_perms='0755' os_env_umask='022'" -t nginx
+
+galaxy: roles ## Do Galaxy deployment
 	ansible-playbook galaxy.yml --diff --extra-vars "__galaxy_dir_perms='0755' os_env_umask='022'"
 
-roles: requirements.yml
+roles: requirements.yml ## Update requirements
 	bash bin/clean-deps.sh
 	ansible-galaxy install -p roles -r requirements.yml
 

@@ -25,6 +25,8 @@
       become_user: "{{ galaxy_user.name }}"
     - usegalaxy_eu.galaxy_systemd
     - usegalaxy_eu.gxadmin
-    - galaxyproject.nginx
+    - role: galaxyproject.nginx
+      tags:
+        - nginx
     - galaxyproject.cvmfs
     - influxdata.chrony
