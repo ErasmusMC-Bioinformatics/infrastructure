@@ -4,7 +4,7 @@
 		<plugin id="condor" type="runner" load="galaxy.jobs.runners.condor:CondorJobRunner"/>
 	</plugins>
 	<destinations default="local_destination">
-		<destination id="local_destination" runner="condor"/>
+		<destination id="local_destination" runner="local_plugin"/>
 	</destinations>
 	<tools>
 	</tools>

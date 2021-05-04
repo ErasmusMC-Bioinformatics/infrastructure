@@ -4,6 +4,7 @@
 		<client_id>{{ vault_elixir_aai.client_id }}</client_id>
 		<client_secret>{{ vault_elixir_aai.client_secret }}</client_secret>
 		<redirect_uri>http://bioinf-galactus/authnz/elixir/callback</redirect_uri>
+		<extra_scopes>offline_access,ga4gh_passport_v1</extra_scopes>
 		<prompt>consent</prompt>
 	</provider>
 </OIDC>
