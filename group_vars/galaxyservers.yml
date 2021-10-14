@@ -69,6 +69,7 @@ galaxy_config:
     enable_oidc: true
     oidc_config_file: "{{ galaxy_config_dir }}/oidc_config.xml"
     oidc_backends_config_file: "{{ galaxy_config_dir }}/oidc_backends_config.xml"
+    file_sources_config_file: "{{ galaxy_config_dir }}/file_sources.yml"
   uwsgi:
     socket: 127.0.0.1:8080
     buffer-size: 16384
@@ -106,6 +107,8 @@ galaxy_config_templates:
     dest: "{{ galaxy_config.galaxy.oidc_backends_config_file }}"
   - src: templates/galaxy/config/oidc_config.xml
     dest: "{{ galaxy_config.galaxy.oidc_config_file }}"
+  - src: "templates/galaxy/config/file_sources.yml"
+    dest: "{{ galaxy_config.galaxy.file_sources_config_file }}"
 
 # systemd
 galaxy_systemd_mode: mule
