@@ -7,9 +7,36 @@ pip_package: python3-pip                               # geerlingguy.pip
 # PostgreSQL
 postgresql_objects_users:
   - name: galaxy
+  - name: telegraf
+  - name: tiaas
 postgresql_objects_databases:
   - name: galaxy
     owner: galaxy
+postgresql_objects_privileges:
+  - database: galaxy
+    roles: telegraf
+    privs: SELECT
+    objs: ALL_IN_SCHEMA
+  - database: galaxy
+    roles: tiaas
+    objs: galaxy_user,galaxy_session,job,history,workflow,workflow_invocation
+    type: table
+    privs: SELECT
+  - database: galaxy
+    roles: tiaas
+    objs: user_group_association,galaxy_group,role,group_role_association
+    type: table
+    privs: SELECT,INSERT
+  - database: galaxy
+    roles: tiaas
+    objs: group_role_association
+    type: table
+    privs: DELETE
+  - database: galaxy
+    roles: tiaas
+    objs: role_id_seq,galaxy_group_id_seq,group_role_association_id_seq,user_group_association_id_seq
+    type: sequence
+    privs: USAGE,SELECT
 
 # PostgreSQL Backups
 postgresql_backup_dir: /data/backups
@@ -22,7 +49,7 @@ galaxy_manage_paths: true
 galaxy_layout: root-dir
 galaxy_root: /srv/galaxy
 galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_21.01
+galaxy_commit_id: release_21.09
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 
@@ -38,11 +65,13 @@ galaxy_config:
     file_path: /data/galaxy
     check_migrate_tools: false
     tool_data_path: "{{ galaxy_mutable_data_dir }}/tool-data"
+    data_dir: "{{ galaxy_mutable_data_dir }}" # I think this is fixed in more recent role versions.
     job_config_file: "{{ galaxy_config_dir }}/job_conf.xml"
     job_metrics_config_file: "{{ galaxy_config_dir }}/job_metrics_conf.xml"
     id_secret: "{{ vault_id_secret }}"
     tool_data_table_config_path: /cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml,/cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml
     object_store_store_by: uuid
+    trs_servers_config_file: "{{ galaxy_config_dir }}/trs_servers_conf.yml"
     aws_estimate: true
     job_working_directory: /data/galaxy/jobs
     allow_path_paste: true
@@ -109,6 +138,8 @@ galaxy_config_templates:
     dest: "{{ galaxy_config.galaxy.oidc_config_file }}"
   - src: "templates/galaxy/config/file_sources.yml"
     dest: "{{ galaxy_config.galaxy.file_sources_config_file }}"
+  - src: "templates/galaxy/config/trs_servers_conf.yml"
+    dest: "{{ galaxy_config.galaxy.trs_servers_config_file }}"
 
 # systemd
 galaxy_systemd_mode: mule
