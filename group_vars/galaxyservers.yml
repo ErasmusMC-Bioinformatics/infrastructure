@@ -87,6 +87,7 @@ galaxy_config:
     show_welcome_with_login: true
     expose_user_name: true
     enable_quotas: true
+    conda_exec: '{{ miniconda_prefix }}/bin/mamba'
     expose_dataset_path: true
     expose_potentially_sensitive_job_metrics: true
     outputs_to_working_directory: true
