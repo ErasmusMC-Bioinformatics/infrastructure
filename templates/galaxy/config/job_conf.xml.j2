@@ -5,8 +5,49 @@
 	</plugins>
 	<destinations default="local_destination">
 		<destination id="local_destination" runner="local_plugin"/>
+		<destination id="local_condor" runner="condor" />
+		<destination id="condor_8" runner="condor">
+			<param id="request_cpus">2</param>
+			<param id="request_memory">8GB</param>
+		</destination>
+		<destination id="condor_16" runner="condor">
+			<param id="request_cpus">4</param>
+			<param id="request_memory">16GB</param>
+		</destination>
+		<destination id="condor_16-fastqc" runner="condor">
+			<param id="request_cpus">2</param>
+			<param id="request_memory">16GB</param>
+			<env id="_JAVA_OPTIONS">-XX:MaxPermSize=2G -Xmx14G -Xms1G</env>
+		</destination>
+		<destination id="condor-shovill" runner="condor">
+			<param id="request_cpus">4</param>
+			<param id="request_memory">40GB</param>
+			<env id="SHOVILL_RAM">40</env>
+		</destination>
+		<destination id="condor_32" runner="condor">
+			<param id="request_cpus">8</param>
+			<param id="request_memory">32GB</param>
+		</destination>
+		<destination id="condor_32-20" runner="condor">
+			<param id="request_cpus">20</param>
+			<param id="request_memory">32GB</param>
+		</destination>
+		<destination id="condor_64" runner="condor">
+			<param id="request_cpus">8</param>
+			<param id="request_memory">64GB</param>
+		</destination>
+		<destination id="condor_128" runner="condor">
+			<param id="request_cpus">16</param>
+			<param id="request_memory">128GB</param>
+		</destination>
 	</destinations>
 	<tools>
+		<tool id="fastqc" destination="local_destination"/>
+		<tool id="shovill" destination="condor-shovill"/>
+		<tool id="flye" destination="condor_32-20"/>
+		<tool id="canu" destination="condor_32-20"/>
+		<tool id="bowtie2" destination="condor_16"/>
+		<tool id="rna_star" destination="condor_128"/>
 	</tools>
 	<limits>
 		<limit type="registered_user_concurrent_jobs">4</limit>

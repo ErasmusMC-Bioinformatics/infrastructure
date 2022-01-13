@@ -53,9 +53,13 @@ galaxy_commit_id: release_21.09
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 
+# This should've been fixed in latest galaxy role??
+galaxy_tool_dependency_dir: "{{ galaxy_mutable_data_dir }}/dependencies"
+# miniconda
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 miniconda_version: "4.6.14"
 miniconda_manage_dependencies: false
+
 
 galaxy_config:
   galaxy:
@@ -175,7 +179,7 @@ nginx_conf_http:
 
 # HTCondor
 condor_host: "bioinf-galactus"
-condor_allow_write: "bioinf-galactus,bioinf-galaxian"
+condor_allow_write: "bioinf-galactus,bioinf-galaxian,*"
 condor_roles:
     - execute
     - central-manager
@@ -187,7 +191,12 @@ condor_fs_domain: emc-bioinf
 condor_uid_domain: emc-bioinf
 condor_trust_uid_domain: 'True'
 condor_extra: |
-    SLOT_TYPE_1 = cpus=1, ram=8
-    NUM_SLOTS_TYPE_1 = 28
-    COLLECTOR_NAME = "ATGM Cluster"
+    CLAIM_PARTITIONABLE_LEFTOVERS = True
+    NUM_SLOTS = 1
+    NUM_SLOTS_TYPE_1 = 1
+    SLOT_TYPE_1 = cpus=90%,ram=90%
+    SLOT_TYPE_1_PARTITIONABLE = True
+    ALLOW_PSLOT_PREEMPTION = False
+    STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
+    COLLECTOR_NAME = "EMC Cluster"
     CGROUP_MEMORY_LIMIT_POLICY = soft
