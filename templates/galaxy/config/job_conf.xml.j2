@@ -3,7 +3,7 @@
 		<plugin id="local_plugin" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner"/>
 		<plugin id="condor" type="runner" load="galaxy.jobs.runners.condor:CondorJobRunner"/>
 	</plugins>
-	<destinations default="local_destination">
+	<destinations default="condor_16">
 		<destination id="local_destination" runner="local_plugin"/>
 		<destination id="local_condor" runner="condor" />
 		<destination id="condor_8" runner="condor">
