@@ -66,3 +66,5 @@
   version: 0.0.1
 - src: usegalaxy_eu.gie_proxy
   version: 0.0.2
+- src: galaxyproject.proftpd
+  version: 0.3.1
