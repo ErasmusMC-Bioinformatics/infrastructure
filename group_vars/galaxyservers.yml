@@ -103,6 +103,9 @@ galaxy_config:
     oidc_config_file: "{{ galaxy_config_dir }}/oidc_config.xml"
     oidc_backends_config_file: "{{ galaxy_config_dir }}/oidc_backends_config.xml"
     file_sources_config_file: "{{ galaxy_config_dir }}/file_sources.yml"
+    # FTP
+    ftp_upload_dir: /data/uploads
+    ftp_upload_site: "{{ inventory_hostname }}"
   uwsgi:
     socket: 127.0.0.1:8080
     buffer-size: 16384
@@ -197,3 +200,20 @@ condor_extra: |
     STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
     COLLECTOR_NAME = "EMC Cluster"
     CGROUP_MEMORY_LIMIT_POLICY = soft
+
+# Proftpd:
+proftpd_galaxy_auth: yes
+galaxy_ftp_upload_dir: "{{ galaxy_config.galaxy.ftp_upload_dir }}"
+proftpd_display_connect: |
+  EMC FTP server
+
+  Unauthorized access is prohibited
+proftpd_create_ftp_upload_dir: yes
+proftpd_options:
+  - User: galaxy
+  - Group: galaxy
+  - Port: 21
+proftpd_sql_db: galaxy@/var/run/postgresql
+proftpd_sql_user: galaxy
+proftpd_global_options:
+  - PassivePorts: 56000 60000

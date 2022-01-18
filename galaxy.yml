@@ -27,5 +27,6 @@
     - usegalaxy_eu.galaxy_systemd
     - galaxyproject.gxadmin
     - galaxyproject.nginx
+    - galaxyproject.proftpd
     - galaxyproject.cvmfs
     - influxdata.chrony
