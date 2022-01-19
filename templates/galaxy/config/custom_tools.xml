@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<toolbox>
+  <section id="emc-testing" name="EMC Testing Tools">
+    <tool_dir dir="/data/emc-tools/" />
+  </section>
+</toolbox>
