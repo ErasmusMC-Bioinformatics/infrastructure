@@ -14,8 +14,8 @@
 - type: posix
   root: '/data/'
   id: data-dir
-  label: User Data Directory
-  doc: everything Galaxy can access on bioinf-galaxian
+  label: Data Directory
+  doc: everything Galaxy can access on bioinf-galaxy
 
 - type: s3fs
   label: Genome Ark
