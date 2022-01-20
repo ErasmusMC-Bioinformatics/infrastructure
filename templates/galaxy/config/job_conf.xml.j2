@@ -36,6 +36,10 @@
 			<param id="request_cpus">8</param>
 			<param id="request_memory">64GB</param>
 		</destination>
+		<destination id="condor_90" runner="condor">
+			<param id="request_cpus">16</param>
+			<param id="request_memory">90GB</param>
+		</destination>
 		<destination id="condor_128" runner="condor">
 			<param id="request_cpus">16</param>
 			<param id="request_memory">128GB</param>
@@ -47,7 +51,7 @@
 		<tool id="flye" destination="condor_32-20"/>
 		<tool id="canu" destination="condor_32-20"/>
 		<tool id="bowtie2" destination="condor_16"/>
-		<tool id="rna_star" destination="condor_128"/>
+		<tool id="rna_star" destination="condor_90"/>
 		<tool id="vardict_java" destination="condor_64"/>
 	</tools>
 	<limits>
