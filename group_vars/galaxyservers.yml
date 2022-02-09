@@ -81,8 +81,8 @@ galaxy_config:
     database_engine_option_server_side_cursors: true
     slow_query_log_threshold: 5
     enable_per_request_sql_debugging: true
-    watch_tools: 'auto'
-    watch_job_rules: 'auto'
+    #watch_tools: 'polling'
+    watch_job_rules: 'polling'
     nginx_x_accel_redirect_base: /_x_accel_redirect
     sanitize_all_html: false
     serve_xss_vulnerable_mimetypes: true
