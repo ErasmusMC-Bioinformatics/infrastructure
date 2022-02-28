@@ -63,7 +63,7 @@ miniconda_manage_dependencies: false
 
 galaxy_config:
   galaxy:
-    brand: "🧬🔬🚀"
+    brand: "🧬🔬🇳🇱🏥👩‍⚕️🩺🦠"
     admin_users: admin@example.org
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
     file_path: /data/galaxy
