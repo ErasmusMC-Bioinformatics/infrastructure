@@ -28,7 +28,7 @@
         name: galaxy
         state: restarted
   roles:
-    - htcondor-github
+    #- htcondor-github
     - galaxyproject.postgresql
     - role: natefoo.postgresql_objects
       become: true
