@@ -63,7 +63,7 @@
   #  version: 1a2612616b93c0af0743c643ef205af28cff7430
   #  name: usegalaxy_eu.tiaas2
 - src: galaxyproject.self_signed_certs
-  version: 0.0.1
+  version: 0.0.3
 - src: usegalaxy_eu.gie_proxy
   version: 0.0.2
 - src: galaxyproject.proftpd
