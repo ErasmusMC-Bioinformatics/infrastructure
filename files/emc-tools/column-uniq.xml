@@ -15,7 +15,7 @@ $has_header
 
 ]]></command>
   <inputs>
-    <param label="Input File" type="tabular" name="input"/>
+    <param label="Input File" type="data" format="tabular" name="input"/>
     <param label="File has a header" checked="false" type="boolean" name="has_header" argument="--has_header" truevalue="--has_header" falsevalue=""/>
     <repeat title="Key Columns" min="1" name="repeat_3">
       <param optional="true" label="Columns to use as a unique key (1-indexed)" value="1" type="integer" name="column" argument="--column"/>
