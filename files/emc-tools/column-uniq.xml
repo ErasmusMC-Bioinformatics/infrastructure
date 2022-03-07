@@ -1,5 +1,8 @@
 <tool name="Column Unique" id="emc-unique_on_columns" version="1.0">
   <description>removes duplicate rows based on some set of unique columns.</description>
+    <requirements>
+        <requirement type="package" version="3.10">python</requirement>
+  </requirements>
   <stdio>
     <exit_code range="1:" level="fatal"/>
   </stdio>
