@@ -1,13 +1,13 @@
-<tool name="Column Unique" id="emc-unique_on_columns" version="1.0">
+<tool name="Column Unique" id="emc-unique_on_columns" version="1.2">
   <description>removes duplicate rows based on some set of unique columns.</description>
-    <requirements>
-        <requirement type="package" version="3.10">python</requirement>
-  </requirements>
+	    <requirements>
+		          <requirement type="package" version="3.10">python</requirement>
+		  </requirements>
   <stdio>
     <exit_code range="1:" level="fatal"/>
   </stdio>
-  <version_command><![CDATA[python uniq.py --version]]></version_command>
-  <command><![CDATA[python uniq.py
+  <version_command><![CDATA[python column-uniq.py --version]]></version_command>
+  <command><![CDATA[python '$__tool_directory__/column-uniq.py'
 $input
 $output
 
@@ -25,8 +25,8 @@ $has_header
     </repeat>
   </inputs>
   <outputs>
-    <data name="output" format="tabular" label="Output File" hidden="false"/>
+    <data name="output" format="tabular" label="Unique rows of ${on_string}" hidden="false"/>
   </outputs>
-  <help><![CDATA[TODO: Write help]]></help>
+  <help><![CDATA[]]></help>
 </tool>
 
