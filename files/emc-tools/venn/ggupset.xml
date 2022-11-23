@@ -7,7 +7,7 @@
 	<command><![CDATA[
 
 #for $f in $input
-	ln -s '$f' '$f.element_identifier'
+	ln -s '$f' '$f.element_identifier';
 #end for
 
 Rscript '$__tool_directory__/trans.R'
