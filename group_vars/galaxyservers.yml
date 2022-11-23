@@ -63,7 +63,7 @@ miniconda_manage_dependencies: false
 
 galaxy_config:
   galaxy:
-    brand: "🧬🔬🇳🇱🏥👩‍⚕️🩺🦠"
+    brand: "🧬🔬🇳🇱🏥"
     admin_users: admin@example.org,hxr@hx42.org,zazkia@gmail.com,d.vanzessen@erasmusmc.nl
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
     file_path: /data/galaxy
@@ -90,7 +90,7 @@ galaxy_config:
     show_welcome_with_login: true
     expose_user_name: true
     enable_quotas: true
-    conda_exec: '{{ miniconda_prefix }}/bin/mamba'
+    #conda_exec: '{{ miniconda_prefix }}/bin/mamba'
     expose_dataset_path: true
     expose_potentially_sensitive_job_metrics: true
     outputs_to_working_directory: true
@@ -108,6 +108,7 @@ galaxy_config:
     ftp_upload_site: "{{ inventory_hostname }}"
     # Error reporting
     error_report_file: "{{ galaxy_config_dir }}/error_report.yml"
+    new_file_path: /data/galaxy/new/
   uwsgi:
     socket: 127.0.0.1:8080
     buffer-size: 16384
