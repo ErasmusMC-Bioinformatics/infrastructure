@@ -1,0 +1,27 @@
+library(tidyverse)
+files <- commandArgs(trailingOnly = TRUE)
+
+# gene, (list of matching conditions)
+data <- list()
+for (idx in 1:length(files)) {
+  k <- files[idx]
+  data[k] <- read_tsv(k, col_names=c("genes"))
+}
+
+all_genes <- c()
+for(gene_list in data){
+  for(gene in gene_list){
+    all_genes <- append(all_genes, gene)
+  }
+}
+all_genes <- unique(sort(all_genes))
+
+df <- tibble(gene=character(), files=character())
+for (gene_idx in 1:length(all_genes)) {
+  gene = all_genes[gene_idx]
+  files <- names(data)[grep(gene, data)]
+  files <- paste(files, sep=",", collapse=",")
+  df = df %>% add_row(gene=gene, files=files)
+}
+
+write_tsv(df, "upset.tsv")
