@@ -1,0 +1,4 @@
+- type: slack
+  verbose: true
+  user_submission: true
+  webhook_url: "{{ vault_webhook_url }}"
