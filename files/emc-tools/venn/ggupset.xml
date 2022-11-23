@@ -9,13 +9,11 @@
 	ln -s '$f' '$f.element_identifier';
 #end for
 
-Rscript '$__tool_directory__/trans.R'
+Rscript '$__tool_directory__/upset.R' '$n_int'
 #for $f in $input
 	'$f.element_identifier'
 #end for
 ;
-
-Rscript '$__tool_directory__/upset.R' '$n_int';
 
 ]]></command>
 	<inputs>
