@@ -1,6 +1,6 @@
 library(tidyverse)
 library(ggupset)
-n_int = commandArgs(trailingOnly=TRUE)
+n_int = as.integer(commandArgs(trailingOnly=TRUE))
 
 trans <- read_delim("upset.tsv", delim = "\t", escape_double = FALSE, trim_ws = TRUE)
 trans$f = str_split(trans$files, ',')
