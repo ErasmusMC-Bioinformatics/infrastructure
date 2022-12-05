@@ -13,4 +13,5 @@ et <- exactTest(y, dispersion=bcv^2)
 et$table = subset(et$table, select = -PValue)
 # Add deg colum with true/false
 et$table$deg = abs(et$table$logFC) >= 2
-write.table(et$table, file="edger.tsv", quote=FALSE, sep="\t")
+#write.table(et$table, file="edger.tsv", quote=FALSE, sep="\t")
+write.table(data.frame("Gene"=rownames(et$table),et$table),"edger.tsv", row.names=FALSE, sep="\t", quote=FALSE)
