@@ -4,14 +4,15 @@
 		<requirement type="package" version="3.40.0">bioconductor-edger</requirement>
 	</requirements>
 	<command><![CDATA[
-ln -s '$control' control.txt;
-ln -s '$treat' treat.txt;
+ln -s "$control" control.txt;
+ln -s "$treat" treat.txt;
 
-Rscript '$__tool_directory__/edgeR.R';
+Rscript '$__tool_directory__/edgeR.R' '$filter';
 ]]></command>
 	<inputs>
 		<param name="control" type="data" format="txt,tabular" label="Counts (Control)" />
 		<param name="treat" type="data" format="txt,tabular" label="Counts (Treat)" />
+		<param name="filter" type="boolean" truevalue="TRUE" falsevalue="FALSE" label="Filter out non-differentially expressed genes" checked="true"/>
 	</inputs>
 	<outputs>
 		<data name="degs" format="tabular" from_work_dir="edger.tsv" label="${tool.name} on ${on_string}: EdgeR no-replicate analysis" />
