@@ -1,0 +1,26 @@
+<tool name="Merge multiple 2 column files" id="emc-merger" version="1.2" profile="21.09">
+	<description>extremely one-off.</description>
+	<requirements>
+		<requirement type="package" version="3.40.0">bioconductor-edger</requirement>
+	</requirements>
+	<command><![CDATA[
+#for $file in $input
+	ln -s '$file' '$file.element_identifier';
+#end for
+
+Rscript '$__tool_directory__/merge.R' 
+
+#for $file in $input
+	'$file.element_identifier'
+#end for
+;
+
+]]></command>
+	<inputs>
+		<param name="input" type="data" format="tabular" multiple="true" label="TWO COLUMN tabular file with the first column titled 'Gene', NO EXCEPTIONS." />
+	</inputs>
+	<outputs>
+		<data name="merged" format="tabular" from_work_dir="merged.tsv" label="Merged ${on_string}" />
+	</outputs>
+	<help><![CDATA[]]></help>
+</tool>
