@@ -49,7 +49,7 @@ galaxy_manage_paths: true
 galaxy_layout: root-dir
 galaxy_root: /srv/galaxy
 galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_21.09
+galaxy_commit_id: release_22.01
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 

@@ -35,25 +35,25 @@ preferences:
               type:  password
               required: False
 
-    dropbox:
-        description: Your Dropbox account
-        inputs:
-            - name: access_token
-              label: Dropbox access token
-              type: password
-              required: False
+    # dropbox:
+    #     description: Your Dropbox account
+    #     inputs:
+    #         - name: access_token
+    #           label: Dropbox access token
+    #           type: password
+    #           required: False
 
-    b2drop:
-        description: Your B2DROP account (https://b2drop.eudat.eu/)
-        inputs:
-            - name: username
-              label: Username
-              type: text
-              required: False
-            - name: password
-              label: Password
-              type:  password
-              required: False
+    # b2drop:
+    #     description: Your B2DROP account (https://b2drop.eudat.eu/)
+    #     inputs:
+    #         - name: username
+    #           label: Username
+    #           type: text
+    #           required: False
+    #         - name: password
+    #           label: Password
+    #           type:  password
+    #           required: False
 
     ena_webin_account:
         description: Your ENA Webin account details
