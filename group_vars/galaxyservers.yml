@@ -64,7 +64,7 @@ miniconda_manage_dependencies: false
 galaxy_config:
   galaxy:
     brand: "🧬🔬🇳🇱🏥"
-    admin_users: admin@example.org,hxr@hx42.org,zazkia@gmail.com,d.vanzessen@erasmusmc.nl
+    admin_users: admin@example.org,hxr@hx42.org,zazkia@gmail.com,d.vanzessen@erasmusmc.nl,d.dollee@erasmusmc.nl
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
     file_path: /data/galaxy
     check_migrate_tools: false
