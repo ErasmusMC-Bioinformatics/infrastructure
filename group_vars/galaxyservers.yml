@@ -1,55 +1,14 @@
 ---
-# Python 3 support
-pip_virtualenv_command: /usr/bin/python3 -m virtualenv # usegalaxy_eu.certbot, usegalaxy_eu.tiaas2, galaxyproject.galaxy
-certbot_virtualenv_package_name: python3-virtualenv    # usegalaxy_eu.certbot
-pip_package: python3-pip                               # geerlingguy.pip
-
-# PostgreSQL
-postgresql_objects_users:
-  - name: galaxy
-  - name: telegraf
-  - name: tiaas
-postgresql_objects_databases:
-  - name: galaxy
-    owner: galaxy
-postgresql_objects_privileges:
-  - database: galaxy
-    roles: telegraf
-    privs: SELECT
-    objs: ALL_IN_SCHEMA
-  - database: galaxy
-    roles: tiaas
-    objs: galaxy_user,galaxy_session,job,history,workflow,workflow_invocation
-    type: table
-    privs: SELECT
-  - database: galaxy
-    roles: tiaas
-    objs: user_group_association,galaxy_group,role,group_role_association
-    type: table
-    privs: SELECT,INSERT
-  - database: galaxy
-    roles: tiaas
-    objs: group_role_association
-    type: table
-    privs: DELETE
-  - database: galaxy
-    roles: tiaas
-    objs: role_id_seq,galaxy_group_id_seq,group_role_association_id_seq,user_group_association_id_seq
-    type: sequence
-    privs: USAGE,SELECT
-
-# PostgreSQL Backups
-postgresql_backup_dir: /data/backups
-postgresql_backup_local_dir: "{{ '~postgres' | expanduser }}/backups"
-
 # Galaxy
 galaxy_create_user: true
 galaxy_separate_privileges: true
 galaxy_manage_paths: true
+galaxy_manage_cleanup: true
+galaxy_systemd_mode: 'gravity'
 galaxy_layout: root-dir
 galaxy_root: /srv/galaxy
 galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_22.01
+galaxy_commit_id: release_23.0
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 
@@ -57,14 +16,39 @@ galaxy_force_checkout: true
 galaxy_tool_dependency_dir: "{{ galaxy_mutable_data_dir }}/dependencies"
 # miniconda
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
-miniconda_version: "4.6.14"
-miniconda_manage_dependencies: false
+miniconda_version: latest
+miniconda_channels: ['conda-forge', 'defaults']
 
+# Galaxy Job Configuration
+galaxy_job_config:
+  runners:
+    local_runner:
+      load: galaxy.jobs.runners.local:LocalJobRunner
+      workers: 4
+  handling:
+    assign: ['db-skip-locked']
+  execution:
+    default: local_env
+    environments:
+      local_env:
+        runner: local_runner
+        tmp_dir: true
+  tools:
+    - class: local # these special tools that aren't parameterized for remote execution - expression tools, upload, etc
+      environment: local_env
 
 galaxy_config:
   galaxy:
     brand: "🧬🔬🇳🇱🏥"
-    admin_users: admin@example.org,hxr@hx42.org,zazkia@gmail.com,d.vanzessen@erasmusmc.nl,d.dollee@erasmusmc.nl
+    logo_src: "https://www.erasmusmc.nl/-/media/erasmusmc/images/_platform/logos/full-colour-svg-main-brand-responsive-1-4.svg"
+    themes_config_file: "{{ galaxy_config_dir }}/themes.yml"
+    # Main Configuration
+    admin_users:
+    - admin@example.org
+    - e.rasche@erasmusmc.nl
+    - zazkia@gmail.com
+    - d.vanzessen@erasmusmc.nl
+    - d.dollee@erasmusmc.nl
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
     file_path: /data/galaxy
     check_migrate_tools: false
@@ -77,27 +61,33 @@ galaxy_config:
     trs_servers_config_file: "{{ galaxy_config_dir }}/trs_servers_conf.yml"
     aws_estimate: true
     job_working_directory: /data/galaxy/jobs
-    allow_path_paste: true
     database_engine_option_server_side_cursors: true
     slow_query_log_threshold: 5
     enable_per_request_sql_debugging: true
-    #watch_tools: 'polling'
-    watch_job_rules: 'polling'
+    # File serving Performance
     nginx_x_accel_redirect_base: /_x_accel_redirect
+
+    watch_job_rules: 'polling'
+    allow_path_paste: true
     sanitize_all_html: false
     serve_xss_vulnerable_mimetypes: true
     library_import_dir: /data/library
+    enable_quotas: true
     show_welcome_with_login: true
     expose_user_name: true
-    enable_quotas: true
     #conda_exec: '{{ miniconda_prefix }}/bin/mamba'
     expose_dataset_path: true
     expose_potentially_sensitive_job_metrics: true
-    outputs_to_working_directory: true
+    # NFS workarounds
+    retry_job_output_collection: 3
+    # Debugging
     cleanup_job: always
     allow_user_deletion: true
     allow_user_impersonation: true
     user_preferences_extra_conf_path: "{{ galaxy_config_dir }}/user_preferences.yml"
+    # Tool security
+    outputs_to_working_directory: true
+    new_user_dataset_access_role_default_private: true # Make datasets private by default
     # oidc
     enable_oidc: true
     oidc_config_file: "{{ galaxy_config_dir }}/oidc_config.xml"
@@ -109,31 +99,32 @@ galaxy_config:
     # Error reporting
     error_report_file: "{{ galaxy_config_dir }}/error_report.yml"
     new_file_path: /data/galaxy/new/
-  uwsgi:
-    socket: 127.0.0.1:8080
-    buffer-size: 16384
-    processes: 1
-    threads: 4
-    offload-threads: 2
-    static-map:
-      - /static={{ galaxy_server_dir }}/static
-      - /favicon.ico={{ galaxy_server_dir }}/static/favicon.ico
-    static-safe: client/galaxy/images
-    master: true
+  gravity:
+    process_manager: systemd
+    galaxy_root: "{{ galaxy_root }}/server"
+    galaxy_user: "{{ galaxy_user_name }}"
     virtualenv: "{{ galaxy_venv_dir }}"
-    pythonpath: "{{ galaxy_server_dir }}/lib"
-    module: galaxy.webapps.galaxy.buildapp:uwsgi_app()
-    thunder-lock: true
-    die-on-term: true
-    hook-master-start:
-      - unix_signal:2 gracefully_kill_them_all
-      - unix_signal:15 gracefully_kill_them_all
-    py-call-osafterfork: true
-    enable-threads: true
-    mule:
-      - lib/galaxy/main.py
-      - lib/galaxy/main.py
-    farm: job-handlers:1,2
+    gunicorn:
+      # listening options
+      bind: "unix:{{ galaxy_mutable_config_dir }}/gunicorn.sock"
+      # performance options
+      workers: 2
+      # Other options that will be passed to gunicorn
+      # This permits setting of 'secure' headers like REMOTE_USER (and friends)
+      # https://docs.gunicorn.org/en/stable/settings.html#forwarded-allow-ips
+      extra_args: '--forwarded-allow-ips="*"'
+      # This lets Gunicorn start Galaxy completely before forking which is faster.
+      # https://docs.gunicorn.org/en/stable/settings.html#preload-app
+      preload: true
+    celery:
+      concurrency: 2
+      loglevel: DEBUG
+    handlers:
+      handler:
+        processes: 2
+        pools:
+          - job-handlers
+          - workflow-schedulers
 
 galaxy_config_templates:
   - src: templates/galaxy/config/job_conf.xml.j2
@@ -152,18 +143,19 @@ galaxy_config_templates:
     dest: "{{ galaxy_config_dir }}/emc-tool-conf.xml"
   - src: "templates/galaxy/config/error_report.yml"
     dest: "{{ galaxy_config.galaxy.error_report_file }}"
+
+galaxy_config_files_public:
   - src: files/galaxy/welcome.html
     dest: "{{ galaxy_mutable_config_dir }}/welcome.html"
+
+galaxy_config_files:
+  - src: files/galaxy/themes.yml
+    dest: "{{ galaxy_config.galaxy.themes_config_file }}"
 
 # Tools
 galaxy_tool_config_files:
 - "{{ galaxy_server_dir }}/config/tool_conf.xml.sample"
 - "{{ galaxy_config_dir }}/emc-tool-conf.xml"
-
-# systemd
-galaxy_systemd_mode: mule
-galaxy_zergpool_listen_addr: 127.0.0.1:8080
-galaxy_restart_handler_name: "Restart Galaxy"
 
 # Certbot
 openssl_domains:
@@ -186,10 +178,31 @@ nginx_servers:
   - redirect-ssl
 nginx_ssl_servers:
   - galaxy
-
 nginx_enable_default_server: false
 nginx_conf_http:
   client_max_body_size: 1g
+  # gzip: "on" # This is enabled by default in Ubuntu, and the duplicate directive will cause a crash.
+  gzip_proxied: "any"
+  gzip_static: "on"   # The ngx_http_gzip_static_module module allows sending precompressed files with the ".gz" filename extension instead of regular files.
+  gzip_vary: "on"
+  gzip_min_length: 128
+  gzip_comp_level: 6  # Tradeoff of better compression for slightly more CPU time.
+  gzip_types: |
+      text/plain
+      text/css
+      text/xml
+      text/javascript
+      application/javascript
+      application/x-javascript
+      application/json
+      application/xml
+      application/xml+rss
+      application/xhtml+xml
+      application/x-font-ttf
+      application/x-font-opentype
+      image/png
+      image/svg+xml
+      image/x-icon
 
 # HTCondor
 condor_host: "bioinf-galactus"

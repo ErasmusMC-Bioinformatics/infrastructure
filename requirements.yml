@@ -1,11 +1,14 @@
+# Galaxy, Postgres, Nginx
 - src: galaxyproject.galaxy
-  version: 0.9.17
+  version: 0.10.14
 - src: galaxyproject.nginx
-  version: 0.7.0
+  version: 0.7.1
 - src: galaxyproject.postgresql
-  version: 1.1.0
-- src: natefoo.postgresql_objects
-  version: "1.1"
+  version: 1.1.2
+- src: galaxyproject.postgresql_objects
+  version: 1.2.0
+- src: galaxyproject.miniconda
+  version: 0.3.1
 - src: geerlingguy.pip
   version: 2.1.0
 - src: uchida.miniconda
@@ -13,7 +16,10 @@
 - src: usegalaxy_eu.galaxy_systemd
   version: 0.1.4
 - src: usegalaxy_eu.certbot
-  version: 0.1.5
+  version: 0.1.11
+# gxadmin (used in cleanup, and later monitoring.)
+- src: galaxyproject.gxadmin
+  version: 0.0.12
 - src: cyverse-ansible.singularity
   version: 048c4f178077d05c1e67ae8d9893809aac9ab3b7
 - src: gantsign.golang
@@ -47,12 +53,8 @@
   version: v6.0.8
 - src: cloudalchemy.grafana
   version: 0.14.2
-- src: galaxyproject.gxadmin
-  version: 0.0.3
 - src: geerlingguy.docker
   version: 3.0.0
-- src: galaxyproject.miniconda
-  version: 0.1.0
 - src: jnv.unattended-upgrades
   version: v1.10.0
 - src: geerlingguy.nfs

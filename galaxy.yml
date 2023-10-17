@@ -1,4 +1,17 @@
 ---
+- hosts: dbservers
+  become: true
+  become_user: root
+  pre_tasks:
+    - name: Install Dependencies
+      package:
+        name: 'acl'
+  roles:
+    - galaxyproject.postgresql
+    - role: galaxyproject.postgresql_objects
+      become: true
+      become_user: postgres
+
 - hosts: galaxyservers
   become: true
   become_user: root
@@ -7,7 +20,15 @@
   pre_tasks:
     - name: Install Dependencies
       package:
-        name: ['git', 'make', 'python3-psycopg2', 'virtualenv', 'tar', 'bzip2']
+        name: ['acl', 'bzip2', 'git', 'make', 'tar', 'python3-venv', 'python3-setuptools']
+    - name: Install RHEL/CentOS/Rocky specific dependencies
+      package:
+        name: ['tmpwatch']
+      when: ansible_os_family == 'RedHat'
+    - name: Install Debian/Ubuntu specific dependencies
+      package:
+        name: ['tmpreaper']
+      when: ansible_os_family == 'Debian'
     - name: Deploy cert
       copy:
         src: files/certificates/bioinf-galactus.erasmusmc.nl.crt
@@ -29,25 +50,23 @@
         owner: root
         group: root
         mode: '0755'
-  handlers:
-    - name: Restart Galaxy
-      systemd:
-        name: galaxy
-        state: restarted
   roles:
     #- htcondor-github
-    - galaxyproject.postgresql
-    - role: natefoo.postgresql_objects
-      become: true
-      become_user: postgres
     - geerlingguy.pip
     - galaxyproject.galaxy
-    - role: uchida.miniconda
+    - role: galaxyproject.miniconda
       become: true
-      become_user: "{{ galaxy_user.name }}"
-    - usegalaxy_eu.galaxy_systemd
-    - galaxyproject.gxadmin
+      become_user: "{{ galaxy_user_name }}"
     - galaxyproject.nginx
+    - galaxyproject.gxadmin
     - galaxyproject.proftpd
     #- galaxyproject.cvmfs
     - influxdata.chrony
+  post_tasks:
+    - name: Setup gxadmin cleanup task
+      ansible.builtin.cron:
+        name: "Cleanup Old User Data"
+        user: galaxy # Run as the Galaxy user
+        minute: "0"
+        hour: "0"
+        job: "GALAXY_LOG_DIR=/tmp/gxadmin/ GALAXY_CONFIG_FILE={{ galaxy_config_file }} GALAXY_ROOT={{ galaxy_root }}/server /usr/local/bin/gxadmin galaxy cleanup 60"
