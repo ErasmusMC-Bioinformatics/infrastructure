@@ -152,6 +152,8 @@ galaxy_config_templates:
     dest: "{{ galaxy_config_dir }}/emc-tool-conf.xml"
   - src: "templates/galaxy/config/error_report.yml"
     dest: "{{ galaxy_config.galaxy.error_report_file }}"
+  - src: files/galaxy/welcome.html
+    dest: "{{ galaxy_mutable_config_dir }}/welcome.html"
 
 # Tools
 galaxy_tool_config_files:
