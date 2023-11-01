@@ -8,7 +8,7 @@ galaxy_systemd_mode: 'gravity'
 galaxy_layout: root-dir
 galaxy_root: /srv/galaxy
 galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_23.0
+galaxy_commit_id: release_23.1
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 
