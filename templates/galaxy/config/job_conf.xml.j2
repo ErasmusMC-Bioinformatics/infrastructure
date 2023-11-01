@@ -22,7 +22,7 @@
 		<destination id="condor_16-fastqc" runner="condor">
 			<param id="request_cpus">2</param>
 			<param id="request_memory">16GB</param>
-			<env id="_JAVA_OPTIONS">-XX:MaxPermSize=2G -Xmx14G -Xms1G</env>
+			<env id="_JAVA_OPTIONS">-Xmx14G -Xms1G</env>
 		</destination>
 		<destination id="condor-shovill" runner="condor">
 			<param id="request_cpus">4</param>
