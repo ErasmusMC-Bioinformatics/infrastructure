@@ -41,7 +41,7 @@ server {
 	# production, this step is skipped, so we will manually alias that.
 	location /static/welcome.html {
 		alias {{ galaxy_mutable_config_dir }}/welcome.html;
-		expires 24h;
+		expires 15m;
 	}
 
 	# serve visualization and interactive environment plugin static content
