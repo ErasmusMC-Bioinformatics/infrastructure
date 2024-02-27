@@ -8,7 +8,7 @@ galaxy_systemd_mode: 'gravity'
 galaxy_layout: root-dir
 galaxy_root: /srv/galaxy
 galaxy_user: {name: galaxy, shell: /bin/bash}
-galaxy_commit_id: release_23.1
+galaxy_commit_id: release_23.2
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 
@@ -46,9 +46,9 @@ galaxy_config:
     admin_users:
     - admin@example.org
     - e.rasche@erasmusmc.nl
-    - zazkia@gmail.com
-    - d.vanzessen@erasmusmc.nl
     - d.dollee@erasmusmc.nl
+    #- zazkia@gmail.com
+    #- d.vanzessen@erasmusmc.nl
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
     file_path: /data/galaxy
     check_migrate_tools: false
