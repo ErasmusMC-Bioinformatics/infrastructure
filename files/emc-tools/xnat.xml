@@ -1,0 +1,125 @@
+<tool id="xnat" name="XNAT data importer" version="0.1.1+galaxy0" profile="21.05">
+<requirements>
+		<requirement type="package" version="0.6.2">xnat</requirement>
+	</requirements>
+	<command detect_errors="exit_code"><![CDATA[
+#set $username = $__user__.extra_preferences.get('xnat_account|username', "guest")
+echo "Running as user: $username. Set your credentials via: User -> Preferences -> Manage Information"  &&
+
+		mkdir -p ./result
+		&&
+		xnat download batch --host "$host" --level $level
+		--netrc '$netrc'
+		#if $project:
+		--project '$project'
+		#end if
+		#if $experiment:
+		--experiment '$experiment'
+		#end if
+		#if $subject:
+		--subject '$subject'
+		#end if
+		#if $scan:
+		--scan '$scan'
+		#end if
+		#if $resource:
+		--resource '$resource'
+		#end if
+		$regex
+		./result
+	]]></command>
+	<configfiles>
+		<configfile name="netrc"><![CDATA[
+#set $server   = $__user__.extra_preferences.get('xnat_account|server', "")
+#set $username = $__user__.extra_preferences.get('xnat_account|username', "")
+#set $password = $__user__.extra_preferences.get('xnat_account|password', "")
+#if $server == ""
+#else
+machine xnat.bmia.nl
+login $username
+password $password			
+#end if
+		]]></configfile>
+	</configfiles>
+	<inputs>
+		<param argument="--host" type="text" label="XNAT host to download from" value="https://xnat.bmia.nl" />
+		<param argument="--project" type="text" optional="true" label="Filter to use for the projects" value="sandbox" />
+		<param argument="--subject" type="text" optional="true" label="Filter to use for the subjects" />
+		<param argument="--experiment" type="text" optional="true" label="Filter to use for the experiments"/>
+		<param argument="--scan" type="text" optional="true" label="Filter to use for scans" />
+		<param argument="--resource" type="text" optional="true" label="Filter to use for resources" />
+		<param argument="--level" type="select" label="Level of data to download from">
+			<option value="project_resource">project resource</option>
+			<option value="subject_resource">subject resource</option>
+			<option value="experiment_resource">experiment resource</option>
+			<option value="scan_resource" selected="true">scan resource</option>
+		</param>
+		<param argument="--regex" type="boolean" truevalue="--regex" falsevalue="" checked="false" label="Switch from simple matching to regular expression matching" />
+	</inputs>
+	<outputs>
+		<collection name="output_data" type="list" label="Downloaded datasets">
+			<discover_datasets pattern="(?P&lt;designation&gt;.+)\.gif" directory="./result" recurse="true" ext="gif"/>
+			<discover_datasets pattern="(?P&lt;designation&gt;.+)\.dcm" directory="./result" recurse="true" ext="dcm"/>
+			<discover_datasets pattern="(?P&lt;designation&gt;.+)\.tiff" directory="./result" recurse="true" ext="tiff"/>
+		</collection>
+	</outputs>
+	<tests>
+		<test>
+			<param name="host" value="https://xnat.bmia.nl" />
+			<param name="project" value="sandbox" />
+			<param name="subject" value="*TEST*" />
+			<param name="resource" value="SNAPSHOTS" />
+			<param name="level" value="scan_resource" />
+			<output_collection name="output_data" type="list" count="20">
+				<element name="ANON_TEST_PROCESSING_3_3x3_qc" file="result/ANON_TEST_PROCESSING/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_3_3x3_qc.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_3_3x3_qc_t" file="result/ANON_TEST_PROCESSING/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_3_3x3_qc_t.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_3_qc" file="result/ANON_TEST_PROCESSING/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_3_qc.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_3_qc_t" file="result/ANON_TEST_PROCESSING/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_3_qc_t.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_5_qc" file="result/ANON_TEST_PROCESSING/scans/5-__ANONYMIZ_00000000_0000000_00_FLAIRfinal__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_5_qc.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_5_qc_t" file="result/ANON_TEST_PROCESSING/scans/5-__ANONYMIZ_00000000_0000000_00_FLAIRfinal__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_5_qc_t.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_6_qc" file="result/ANON_TEST_PROCESSING/scans/6-__ANONYMIZ_00000000_0000000_00_T1final__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_6_qc.gif" format="gif" />
+				<element name="ANON_TEST_PROCESSING_6_qc_t" file="result/ANON_TEST_PROCESSING/scans/6-__ANONYMIZ_00000000_0000000_00_T1final__/resources/SNAPSHOTS/files/ANON_TEST_PROCESSING_6_qc_t.gif" format="gif" />
+				<element name="TEST_001_CT_001_3_qc" file="result/TEST_001_CT_001/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/TEST_001_CT_001_3_qc.gif" format="gif" />
+				<element name="TEST_001_CT_001_3_qc_t" file="result/TEST_001_CT_001/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/TEST_001_CT_001_3_qc_t.gif" format="gif" />
+				<element name="TEST_001_CT_001_5_qc" file="result/TEST_001_CT_001/scans/5-FLAIR/resources/SNAPSHOTS/files/TEST_001_CT_001_5_qc.gif" format="gif" />
+				<element name="TEST_001_CT_001_5_qc_t" file="result/TEST_001_CT_001/scans/5-FLAIR/resources/SNAPSHOTS/files/TEST_001_CT_001_5_qc_t.gif" format="gif" />
+				<element name="TEST_001_CT_001_6_qc" file="result/TEST_001_CT_001/scans/6-__ANONYMIZ_00000000_0000000_00_T1final__/resources/SNAPSHOTS/files/TEST_001_CT_001_6_qc.gif" format="gif" />
+				<element name="TEST_HA1_3_qc" file="result/TEST_HA1/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/TEST_HA1_3_qc.gif" format="gif" />
+				<element name="TEST_HA1_3_qc_t" file="result/TEST_HA1/scans/3-__ANONYMIZ_00000000_0000000_00_PDfinal__/resources/SNAPSHOTS/files/TEST_HA1_3_qc_t.gif" format="gif" />
+				<element name="TEST_001_CT_001_6_qc_t" file="result/TEST_001_CT_001/scans/6-__ANONYMIZ_00000000_0000000_00_T1final__/resources/SNAPSHOTS/files/TEST_001_CT_001_6_qc_t.gif" format="gif" />
+				<element name="TEST_HA1_5_qc" file="result/TEST_HA1/scans/5-__ANONYMIZ_00000000_0000000_00_FLAIRfinal__/resources/SNAPSHOTS/files/TEST_HA1_5_qc.gif" format="gif" />
+				<element name="TEST_HA1_5_qc_t" file="result/TEST_HA1/scans/5-__ANONYMIZ_00000000_0000000_00_FLAIRfinal__/resources/SNAPSHOTS/files/TEST_HA1_5_qc_t.gif" format="gif" />
+				<element name="TEST_HA1_6_qc" file="result/TEST_HA1/scans/6-__ANONYMIZ_00000000_0000000_00_T1final__/resources/SNAPSHOTS/files/TEST_HA1_6_qc.gif" format="gif" />
+				<element name="TEST_HA1_6_qc_t" file="result/TEST_HA1/scans/6-__ANONYMIZ_00000000_0000000_00_T1final__/resources/SNAPSHOTS/files/TEST_HA1_6_qc_t.gif" format="gif" />
+			</output_collection>
+		</test>
+	</tests>
+	<help><![CDATA[
+	Usage: xnat download batch [OPTIONS] TARGETDIR
+
+	  Download a batch of data based on a search to target directory
+
+	Options
+
+	  ------------------------------  ---------------------------------
+	  Option                          Description
+	  ------------------------------  ---------------------------------
+	  --project TEXT                  Filter for selecting the projects
+	  --experiment TEXT               Filter for selecting the experiments
+	  --subject TEXT                  Filter for selecting the subjects
+	  --scan TEXT                     Filter for selecting the scans
+	  --resource TEXT                 Filter for selecting the resources
+	  --level                         What resource level to search on
+	  --regex                         Flag to switch from simple matching to regular expressions
+	  --host TEXT                     URL of the XNAT host to connect to, if not given will check XNAT_HOST or XNATPY_HOST environment variables  [required]
+	  -u, --user TEXT                 Username to connect to XNAT with.
+	  -n, --netrc TEXT                .netrc file location, if not given will check NETRC environment variable or default to ~/.netrc
+	  --jsession TEXT                 JSESSION value for re-using a previously opened login session
+	  --timeout FLOAT                 Timeout for requests made by this command in ms.
+	  --loglevel                      Logging verbosity level.
+	  --help                          Show this message and exit.
+	  ------------------------------  ---------------------------------
+
+	]]></help>
+	<citations type="doi"></citation>
+</tool>
