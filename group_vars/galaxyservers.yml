@@ -47,8 +47,6 @@ galaxy_config:
     - admin@example.org
     - e.rasche@erasmusmc.nl
     - d.dollee@erasmusmc.nl
-    #- zazkia@gmail.com
-    #- d.vanzessen@erasmusmc.nl
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
     file_path: /data/galaxy
     check_migrate_tools: false
@@ -64,6 +62,7 @@ galaxy_config:
     database_engine_option_server_side_cursors: true
     slow_query_log_threshold: 5
     enable_per_request_sql_debugging: true
+    enable_notification_system: true
     # File serving Performance
     nginx_x_accel_redirect_base: /_x_accel_redirect
 

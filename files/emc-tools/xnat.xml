@@ -4,11 +4,12 @@
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
 #set $username = $__user__.extra_preferences.get('xnat_account|username', "guest")
-echo "Running as user: $username. Set your credentials via: User -> Preferences -> Manage Information"  &&
+#set $server   = $__user__.extra_preferences.get('xnat_account|server', "xnat.bmia.nl")
+echo 'Running as user: $username @ $server. Set your credentials via: User -> Preferences -> Manage Information'  &&
 
 		mkdir -p ./result
 		&&
-		xnat download batch --host "$host" --level $level
+		xnat download batch --host "$server" --level $level
 		--netrc '$netrc'
 		#if $project:
 		--project '$project'
@@ -121,5 +122,5 @@ password $password
 	  ------------------------------  ---------------------------------
 
 	]]></help>
-	<citations type="doi"></citation>
+	<citations type="doi"></citations>
 </tool>
