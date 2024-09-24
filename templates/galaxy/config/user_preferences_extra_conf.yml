@@ -35,6 +35,22 @@ preferences:
               type:  password
               required: False
 
+    xnat_account:
+        description: Your preferred XNAT server
+        inputs:
+            - name: server
+              label: Server (without https://)
+              type: text
+              required: False
+            - name: username
+              label: Username
+              type: text
+              required: False
+            - name: password
+              label: Password
+              type:  password
+              required: False
+
     # dropbox:
     #     description: Your Dropbox account
     #     inputs:
