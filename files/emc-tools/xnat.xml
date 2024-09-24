@@ -1,15 +1,14 @@
-<tool id="xnat" name="XNAT data importer" version="0.1.1+galaxy0" profile="21.05">
+<tool id="xnat" name="XNAT data importer" version="0.1.2+galaxy0" profile="21.05">
 <requirements>
 		<requirement type="package" version="0.6.2">xnat</requirement>
 	</requirements>
 	<command detect_errors="exit_code"><![CDATA[
 #set $username = $__user__.extra_preferences.get('xnat_account|username', "guest")
 #set $server   = $__user__.extra_preferences.get('xnat_account|server', "xnat.bmia.nl")
-echo 'Running as user: $username @ $server. Set your credentials via: User -> Preferences -> Manage Information'  &&
+echo 'Running as user: $username @ $server. Set your credentials via: User -> Preferences -> Manage Information';
 
-		mkdir -p ./result
-		&&
-		xnat download batch --host "$server" --level $level
+		mkdir -p ./result;
+		xnat download batch --host "https://$server" --level $level
 		--netrc '$netrc'
 		#if $project:
 		--project '$project'
@@ -27,16 +26,15 @@ echo 'Running as user: $username @ $server. Set your credentials via: User -> Pr
 		--resource '$resource'
 		#end if
 		$regex
-		./result
+		./result;
 	]]></command>
 	<configfiles>
 		<configfile name="netrc"><![CDATA[
 #set $server   = $__user__.extra_preferences.get('xnat_account|server', "")
 #set $username = $__user__.extra_preferences.get('xnat_account|username', "")
 #set $password = $__user__.extra_preferences.get('xnat_account|password', "")
-#if $server == ""
-#else
-machine xnat.bmia.nl
+#if $server != "":
+machine $server
 login $username
 password $password			
 #end if
@@ -98,28 +96,28 @@ password $password
 	<help><![CDATA[
 	Usage: xnat download batch [OPTIONS] TARGETDIR
 
-	  Download a batch of data based on a search to target directory
+	Download a batch of data based on a search to target directory
 
 	Options
 
-	  ------------------------------  ---------------------------------
-	  Option                          Description
-	  ------------------------------  ---------------------------------
-	  --project TEXT                  Filter for selecting the projects
-	  --experiment TEXT               Filter for selecting the experiments
-	  --subject TEXT                  Filter for selecting the subjects
-	  --scan TEXT                     Filter for selecting the scans
-	  --resource TEXT                 Filter for selecting the resources
-	  --level                         What resource level to search on
-	  --regex                         Flag to switch from simple matching to regular expressions
-	  --host TEXT                     URL of the XNAT host to connect to, if not given will check XNAT_HOST or XNATPY_HOST environment variables  [required]
-	  -u, --user TEXT                 Username to connect to XNAT with.
-	  -n, --netrc TEXT                .netrc file location, if not given will check NETRC environment variable or default to ~/.netrc
-	  --jsession TEXT                 JSESSION value for re-using a previously opened login session
-	  --timeout FLOAT                 Timeout for requests made by this command in ms.
-	  --loglevel                      Logging verbosity level.
-	  --help                          Show this message and exit.
-	  ------------------------------  ---------------------------------
+	==============================  =================================
+	Option                          Description
+	==============================  =================================
+	--project TEXT                  Filter for selecting the projects
+	--experiment TEXT               Filter for selecting the experiments
+	--subject TEXT                  Filter for selecting the subjects
+	--scan TEXT                     Filter for selecting the scans
+	--resource TEXT                 Filter for selecting the resources
+	--level                         What resource level to search on
+	--regex                         Flag to switch from simple matching to regular expressions
+	--host TEXT                     URL of the XNAT host to connect to, if not given will check XNAT_HOST or XNATPY_HOST environment variables  [required]
+	-u, --user TEXT                 Username to connect to XNAT with.
+	-n, --netrc TEXT                .netrc file location, if not given will check NETRC environment variable or default to ~/.netrc
+	--jsession TEXT                 JSESSION value for re-using a previously opened login session
+	--timeout FLOAT                 Timeout for requests made by this command in ms.
+	--loglevel                      Logging verbosity level.
+	--help                          Show this message and exit.
+	==============================  =================================
 
 	]]></help>
 	<citations type="doi"></citations>
