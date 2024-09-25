@@ -1,72 +1,75 @@
-# Galaxy, Postgres, Nginx
-- src: galaxyproject.galaxy
-  version: 0.10.14
-- src: galaxyproject.nginx
-  version: 0.7.1
-- src: galaxyproject.postgresql
-  version: 1.1.2
-- src: galaxyproject.postgresql_objects
-  version: 1.2.0
-- src: galaxyproject.miniconda
-  version: 0.3.1
-- src: geerlingguy.pip
-  version: 2.1.0
-- src: uchida.miniconda
-  version: 0.3.0
-- src: usegalaxy_eu.galaxy_systemd
-  version: 0.1.4
-- src: usegalaxy_eu.certbot
-  version: 0.1.11
-# gxadmin (used in cleanup, and later monitoring.)
-- src: galaxyproject.gxadmin
-  version: 0.0.12
-- src: cyverse-ansible.singularity
-  version: 048c4f178077d05c1e67ae8d9893809aac9ab3b7
-- src: gantsign.golang
-  version: 2.6.3
-- src: galaxyproject.repos
-  version: 0.0.2
-- src: usegalaxy_eu.rabbitmq
-  version: 0.1.0
-- src: galaxyproject.cvmfs
-  version: 0.2.14
-- src: galaxyproject.pulsar
-  version: 1.0.9
-- src: geerlingguy.java
-  version: 1.10.0
-- src: geerlingguy.jenkins
-  version: 4.3.0
-- src: dj-wasabi.telegraf
-  version: 0.13.1
-- src: influxdata.chrony
-  version: master
-- src: dev-sec.os-hardening
-  version: 6.2.0
-- src: cyverse-ansible.singularity
-  version: 048c4f178077d05c1e67ae8d9893809aac9ab3b7
-- src: gantsign.golang
-  version: 2.6.3
-- src: https://github.com/Avans-ATGM/ansible-htcondor
-  version: 4fca8d776e49edc88537d5a949cfa0f5a519caaf
-  name: htcondor-github
-- src: usegalaxy_eu.influxdb
-  version: v6.0.8
-- src: cloudalchemy.grafana
-  version: 0.14.2
-- src: geerlingguy.docker
-  version: 3.0.0
-- src: jnv.unattended-upgrades
-  version: v1.10.0
-- src: geerlingguy.nfs
-  version: 2.0.0
-- src: usegalaxy_eu.tiaas2
-  version: 0.0.9
-  #- src: https://github.com/usegalaxy-eu/ansible-tiaas2/
-  #  version: 1a2612616b93c0af0743c643ef205af28cff7430
-  #  name: usegalaxy_eu.tiaas2
-- src: galaxyproject.self_signed_certs
-  version: 0.0.3
-- src: usegalaxy_eu.gie_proxy
-  version: 0.0.2
-- src: galaxyproject.proftpd
-  version: 0.3.1
+collections:
+  - community.general
+roles:
+  # Galaxy, Postgres, Nginx
+  - src: galaxyproject.galaxy
+    version: 0.10.14
+  - src: galaxyproject.nginx
+    version: 0.7.1
+  - src: galaxyproject.postgresql
+    version: 1.1.2
+  - src: galaxyproject.postgresql_objects
+    version: 1.2.0
+  - src: galaxyproject.miniconda
+    version: 0.3.1
+  - src: geerlingguy.pip
+    version: 2.1.0
+  - src: uchida.miniconda
+    version: 0.3.0
+  - src: usegalaxy_eu.galaxy_systemd
+    version: 0.1.4
+  - src: usegalaxy_eu.certbot
+    version: 0.1.11
+  # gxadmin (used in cleanup, and later monitoring.)
+  - src: galaxyproject.gxadmin
+    version: 0.0.12
+  - src: cyverse-ansible.singularity
+    version: 048c4f178077d05c1e67ae8d9893809aac9ab3b7
+  - src: gantsign.golang
+    version: 2.6.3
+  - src: galaxyproject.repos
+    version: 0.0.2
+  - src: usegalaxy_eu.rabbitmq
+    version: 0.1.0
+  - src: galaxyproject.cvmfs
+    version: 0.2.14
+  - src: galaxyproject.pulsar
+    version: 1.0.9
+  - src: geerlingguy.java
+    version: 1.10.0
+  - src: geerlingguy.jenkins
+    version: 4.3.0
+  - src: dj-wasabi.telegraf
+    version: 0.13.1
+  - src: influxdata.chrony
+    version: master
+  - src: dev-sec.os-hardening
+    version: 6.2.0
+  - src: cyverse-ansible.singularity
+    version: 048c4f178077d05c1e67ae8d9893809aac9ab3b7
+  - src: gantsign.golang
+    version: 2.6.3
+  - src: https://github.com/Avans-ATGM/ansible-htcondor
+    version: 4fca8d776e49edc88537d5a949cfa0f5a519caaf
+    name: htcondor-github
+  - src: usegalaxy_eu.influxdb
+    version: v6.0.8
+  - src: cloudalchemy.grafana
+    version: 0.14.2
+  - src: geerlingguy.docker
+    version: 3.0.0
+  - src: jnv.unattended-upgrades
+    version: v1.10.0
+  - src: geerlingguy.nfs
+    version: 2.0.0
+  - src: usegalaxy_eu.tiaas2
+    version: 0.0.9
+    #- src: https://github.com/usegalaxy-eu/ansible-tiaas2/
+    #  version: 1a2612616b93c0af0743c643ef205af28cff7430
+    #  name: usegalaxy_eu.tiaas2
+  - src: galaxyproject.self_signed_certs
+    version: 0.0.3
+  - src: usegalaxy_eu.gie_proxy
+    version: 0.0.2
+  - src: galaxyproject.proftpd
+    version: 0.3.1
