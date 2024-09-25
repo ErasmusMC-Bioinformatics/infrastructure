@@ -51,7 +51,7 @@
         group: root
         mode: '0755'
   roles:
-    #- htcondor-github
+    - htcondor-github
     - geerlingguy.pip
     - galaxyproject.galaxy
     - role: galaxyproject.miniconda
