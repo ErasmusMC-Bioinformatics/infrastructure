@@ -12,6 +12,10 @@ galaxy_commit_id: release_24.0
 galaxy_config_style: yaml
 galaxy_force_checkout: true
 
+# Variables to enable overriding
+galaxy_data_directory: /data/galaxy
+galaxy_brand: "🧬🔬🇳🇱🏥"
+
 # This should've been fixed in latest galaxy role??
 galaxy_tool_dependency_dir: "{{ galaxy_mutable_data_dir }}/dependencies"
 # miniconda
@@ -39,7 +43,7 @@ galaxy_job_config:
 
 galaxy_config:
   galaxy:
-    brand: "🧬🔬🇳🇱🏥"
+    brand: "{{ galaxy_brand }}"
     logo_src: "https://www.erasmusmc.nl/-/media/erasmusmc/images/_platform/logos/full-colour-svg-main-brand-responsive-1-4.svg"
     themes_config_file: "{{ galaxy_config_dir }}/themes.yml"
     # Main Configuration
@@ -48,7 +52,7 @@ galaxy_config:
     - e.rasche@erasmusmc.nl
     - d.dollee@erasmusmc.nl
     database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
-    file_path: /data/galaxy
+    file_path: "{{ galaxy_data_directory }}"
     check_migrate_tools: false
     tool_data_path: "{{ galaxy_mutable_data_dir }}/tool-data"
     data_dir: "{{ galaxy_mutable_data_dir }}" # I think this is fixed in more recent role versions.
@@ -97,7 +101,7 @@ galaxy_config:
     ftp_upload_site: "{{ inventory_hostname }}"
     # Error reporting
     error_report_file: "{{ galaxy_config_dir }}/error_report.yml"
-    new_file_path: /data/galaxy/new/
+    new_file_path: "{{ galaxy_data_directory }}/new"
   gravity:
     process_manager: systemd
     galaxy_root: "{{ galaxy_root }}/server"
