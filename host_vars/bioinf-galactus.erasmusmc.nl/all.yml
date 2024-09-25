@@ -14,30 +14,6 @@ certbot_domains:
 certbot_agree_tos: --agree-tos
 
 
-# HTCondor
-condor_host: "bioinf-galactus"
-condor_allow_write: "bioinf-galactus,bioinf-galaxian,*"
-condor_roles:
-    - execute
-    - central-manager
-    - submit
-condor_allow_negotiator: '$(ALLOW_WRITE)'
-condor_allow_administrator: "$(ALLOW_WRITE)"
-condor_network_interface: "{{ ansible_default_ipv4.interface }}"
-condor_fs_domain: emc-bioinf
-condor_uid_domain: emc-bioinf
-condor_trust_uid_domain: 'True'
-condor_extra: |
-    CLAIM_PARTITIONABLE_LEFTOVERS = True
-    NUM_SLOTS = 1
-    NUM_SLOTS_TYPE_1 = 1
-    SLOT_TYPE_1 = cpus=90%,ram=90%
-    SLOT_TYPE_1_PARTITIONABLE = True
-    ALLOW_PSLOT_PREEMPTION = False
-    STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
-    COLLECTOR_NAME = "EMC Cluster"
-    CGROUP_MEMORY_LIMIT_POLICY = soft
-
 # Proftpd:
 proftpd_galaxy_auth: yes
 galaxy_ftp_upload_dir: "{{ galaxy_config.galaxy.ftp_upload_dir }}"

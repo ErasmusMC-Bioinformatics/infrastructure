@@ -32,7 +32,7 @@ roles:
   - src: usegalaxy_eu.rabbitmq
     version: 0.1.0
   - src: galaxyproject.cvmfs
-    version: 0.2.14
+    version: 0.2.23
   - src: galaxyproject.pulsar
     version: 1.0.9
   - src: geerlingguy.java

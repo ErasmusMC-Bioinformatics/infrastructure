@@ -4,6 +4,11 @@ server {
 
     server_name "{{ inventory_hostname }}";
 
+
+	location /.well-known/ {
+		root {{ certbot_well_known_root }};
+	}
+
     location / {
         return 302 https://{{ inventory_hostname }}$request_uri;
     }
