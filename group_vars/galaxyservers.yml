@@ -160,21 +160,6 @@ galaxy_tool_config_files:
 - "{{ galaxy_server_dir }}/config/tool_conf.xml.sample"
 - "{{ galaxy_config_dir }}/emc-tool-conf.xml"
 
-# Certbot
-openssl_domains:
-- bioinf-galaxy.erasmusmc.nl
-nginx_ssl_role: galaxyproject.self_signed_certs
-nginx_conf_ssl_certificate_key: /etc/ssl/private/bioinf-galactus.erasmusmc.nl.key
-nginx_conf_ssl_certificate: /etc/ssl/certs/bioinf-galactus.erasmusmc.nl.crt
-
-certbot_share_key_users:
-  - nginx
-certbot_post_renewal: |
-    systemctl restart nginx || true
-certbot_domains:
- - "{{ inventory_hostname }}"
-certbot_agree_tos: --agree-tos
-
 # NGINX
 nginx_selinux_allow_local_connections: true
 nginx_servers:
@@ -206,44 +191,3 @@ nginx_conf_http:
       image/png
       image/svg+xml
       image/x-icon
-
-# HTCondor
-condor_host: "bioinf-galactus"
-condor_allow_write: "bioinf-galactus,bioinf-galaxian,*"
-condor_roles:
-    - execute
-    - central-manager
-    - submit
-condor_allow_negotiator: '$(ALLOW_WRITE)'
-condor_allow_administrator: "$(ALLOW_WRITE)"
-condor_network_interface: "{{ ansible_default_ipv4.interface }}"
-condor_fs_domain: emc-bioinf
-condor_uid_domain: emc-bioinf
-condor_trust_uid_domain: 'True'
-condor_extra: |
-    CLAIM_PARTITIONABLE_LEFTOVERS = True
-    NUM_SLOTS = 1
-    NUM_SLOTS_TYPE_1 = 1
-    SLOT_TYPE_1 = cpus=90%,ram=90%
-    SLOT_TYPE_1_PARTITIONABLE = True
-    ALLOW_PSLOT_PREEMPTION = False
-    STARTD.PROPORTIONAL_SWAP_ASSIGNMENT = True
-    COLLECTOR_NAME = "EMC Cluster"
-    CGROUP_MEMORY_LIMIT_POLICY = soft
-
-# Proftpd:
-proftpd_galaxy_auth: yes
-galaxy_ftp_upload_dir: "{{ galaxy_config.galaxy.ftp_upload_dir }}"
-proftpd_display_connect: |
-  EMC FTP server
-
-  Unauthorized access is prohibited
-proftpd_create_ftp_upload_dir: yes
-proftpd_options:
-  - User: galaxy
-  - Group: galaxy
-  - Port: 21
-proftpd_sql_db: galaxy@/var/run/postgresql
-proftpd_sql_user: galaxy
-proftpd_global_options:
-  - PassivePorts: 56000 60000

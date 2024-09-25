@@ -1,0 +1,3 @@
+galaxy_root: /srv/galaxy
+galaxy_data_directory: /data/xnat-data/galaxy-data/
+galaxy_brand: "🔬"
