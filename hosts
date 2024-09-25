@@ -1,7 +1,11 @@
 [dbservers]
 bioinf-galactus.erasmusmc.nl ansible_connection=local
+sensitiveimages ansible_user=hrasche2 ansible_host=145.38.185.197
 
 [galaxyservers]
 bioinf-galactus.erasmusmc.nl ansible_connection=local
 #bioinf-galactus.erasmusmc.nl ansible_host=10.183.128.12 ansible_user=bioinf
 #bioinf-galaxian.erasmusmc.nl ansible_port=42 ansible_host=10.183.128.12 ansible_user=bioinf
+
+[surf]
+sensitiveimages ansible_user=hrasche2 ansible_host=145.38.185.197
