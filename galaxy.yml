@@ -29,20 +29,20 @@
       package:
         name: ['tmpreaper']
       when: ansible_os_family == 'Debian'
-    - name: Deploy cert
-      copy:
-        src: files/certificates/bioinf-galactus.erasmusmc.nl.crt
-        dest: /etc/ssl/certs/bioinf-galactus.erasmusmc.nl.crt
-        owner: root
-        group: root
-        mode: '0644'
-    - name: Deploy key
-      copy:
-        src: files/certificates/bioinf-galactus.erasmusmc.nl.key
-        dest: /etc/ssl/private/bioinf-galactus.erasmusmc.nl.key
-        owner: root
-        group: root
-        mode: '0400'
+    # - name: Deploy cert
+    #   copy:
+    #     src: files/certificates/bioinf-galactus.erasmusmc.nl.crt
+    #     dest: /etc/ssl/certs/bioinf-galactus.erasmusmc.nl.crt
+    #     owner: root
+    #     group: root
+    #     mode: '0644'
+    # - name: Deploy key
+    #   copy:
+    #     src: files/certificates/bioinf-galactus.erasmusmc.nl.key
+    #     dest: /etc/ssl/private/bioinf-galactus.erasmusmc.nl.key
+    #     owner: root
+    #     group: root
+    #     mode: '0400'
     - name: Deploy Custom Tools Folder
       copy:
         src: files/emc-tools/
