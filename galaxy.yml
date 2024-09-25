@@ -59,8 +59,8 @@
       become_user: "{{ galaxy_user_name }}"
     - galaxyproject.nginx
     - galaxyproject.gxadmin
-    - galaxyproject.proftpd
-    #- galaxyproject.cvmfs
+    # - galaxyproject.proftpd
+    - galaxyproject.cvmfs
     - influxdata.chrony
   post_tasks:
     - name: Setup gxadmin cleanup task
