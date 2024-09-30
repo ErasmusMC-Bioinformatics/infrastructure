@@ -138,9 +138,9 @@ galaxy_config_templates:
     dest: "{{ galaxy_config.galaxy.job_config_file }}"
   - src: templates/galaxy/config/user_preferences_extra_conf.yml
     dest: "{{ galaxy_config.galaxy.user_preferences_extra_conf_path }}"
-  - src: templates/galaxy/config/oidc_backends_config.xml
+  - src: templates/galaxy/config/oidc_backends_config.emc.xml
     dest: "{{ galaxy_config.galaxy.oidc_backends_config_file }}"
-  - src: templates/galaxy/config/oidc_config.xml
+  - src: templates/galaxy/config/oidc_config.emc.xml
     dest: "{{ galaxy_config.galaxy.oidc_config_file }}"
   - src: "templates/galaxy/config/file_sources.yml"
     dest: "{{ galaxy_config.galaxy.file_sources_config_file }}"

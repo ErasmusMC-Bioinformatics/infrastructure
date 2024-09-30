@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<OIDC>
+	<provider name="oidc">
+		<client_id>{{ vault_sram.client_id }}</client_id>
+		<client_secret>{{ vault_sram.client_secret }}</client_secret>
+		<redirect_uri>https://{{ inventory_hostname }}/authnz/oidc/callback</redirect_uri>
+		<oidc_endpoint>https://proxy.sram.surf.nl/</oidc_endpoint>
+		<custom_button_text>with SURF SRAM</custom_button_text>
+	</provider>
+</OIDC>
