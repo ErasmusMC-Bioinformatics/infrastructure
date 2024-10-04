@@ -18,7 +18,7 @@ certbot_domains:
 certbot_agree_tos: --agree-tos
 
 # Galaxy Customisations
-galaxy_root: /srv/galaxy
+galaxy_root: /data/xnat-data/galaxy-server
 galaxy_data_directory: /data/xnat-data/galaxy-data
 galaxy_brand: "🔬"
 galaxy_mutable_data_dir: "{{ galaxy_data_directory }}/var"
@@ -51,3 +51,13 @@ galaxy_config_templates:
     dest: "{{ galaxy_config_dir }}/emc-tool-conf.xml"
   - src: "templates/galaxy/config/error_report.yml"
     dest: "{{ galaxy_config.galaxy.error_report_file }}"
+
+postgresql_objects_privileges:
+  - database: galaxy
+    roles: telegraf
+    privs: SELECT
+    objs: ALL_IN_SCHEMA
+
+postgresql_backup_dir: /data/xnat-data/postgres/
+
+golang_gopath: /data/xnat-data/golang/
