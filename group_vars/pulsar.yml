@@ -18,6 +18,8 @@ pulsar_optional_dependencies:
   - psutil
   - uwsgi
 
+pulsar_host: "0.0.0.0"
+
 pulsar_yaml_config:
   private_token: "{{ pulsar_token }}"
   staging_directory: "{{ pulsar_staging_dir }}"
