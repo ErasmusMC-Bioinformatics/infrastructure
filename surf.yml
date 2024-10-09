@@ -1,0 +1,35 @@
+---
+- hosts: sensitiveimages.src-sensitive-i.src.surf-hosted.nl
+  become: true
+  become_user: root
+  vars_files:
+    - group_vars/secret.yml
+  pre_tasks:
+  roles:
+    - role: geerlingguy.nfs
+      vars:
+        nfs_exports: [ "/data/xnat-data/galaxy-data/    145.38.193.48(rw,sync,no_root_squash)" ]
+
+- hosts: worker1.src-sensitive-i.src.surf-hosted.nl
+  become: true
+  become_user: root
+  vars_files:
+    - group_vars/secret.yml
+  pre_tasks:
+    - name: Install some packages
+      package:
+        name:
+          - build-essential
+          - git
+          - python3-dev
+          - libcurl4-openssl-dev
+          - libssl-dev
+          - virtualenv
+          - python3-venv
+        state: present
+        update_cache: yes
+      become: yes
+  roles:
+    - role: galaxyproject.cvmfs
+      become: yes
+    - galaxyproject.pulsar
