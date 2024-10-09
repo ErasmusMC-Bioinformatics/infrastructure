@@ -19,6 +19,8 @@ pulsar_optional_dependencies:
   - uwsgi
 
 pulsar_host: "0.0.0.0"
+pulsar_uwsgi_options:
+  buffer-size: 32768
 
 pulsar_yaml_config:
   private_token: "{{ pulsar_token }}"
