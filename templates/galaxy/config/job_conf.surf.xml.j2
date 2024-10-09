@@ -2,6 +2,7 @@
 	<plugins workers="4">
 		<plugin id="local_plugin" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner"/>
 		<plugin id="condor" type="runner" load="galaxy.jobs.runners.condor:CondorJobRunner"/>
+		<plugin id="pulsar" type="runner" load="galaxy.jobs.runners.pulsar:PulsarRESTJobRunner"/>
 	</plugins>
 	<destinations default="condor_16">
 		<destination id="local_destination" runner="local_plugin"/>
@@ -18,6 +19,11 @@
 		<destination id="condor_16" runner="condor">
 			<param id="request_cpus">4</param>
 			<param id="request_memory">15GB</param>
+		</destination>
+		<destination id="remote_gpu" runner="pulsar">
+			<!-- <param id="jobs_directory">__PULSAR_JOBS_DIRECTORY__</param> -->
+			<param id="url">http://worker1.src-sensitive-i.src.surf-hosted.nl:8913/</param>
+			<param id="dependency_resolution">remote</param>
 		</destination>
 	</destinations>
 	<tools>

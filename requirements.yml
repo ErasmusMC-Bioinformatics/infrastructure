@@ -61,7 +61,7 @@ roles:
   - src: jnv.unattended-upgrades
     version: v1.10.0
   - src: geerlingguy.nfs
-    version: 2.0.0
+    version: 2.1.0
   - src: usegalaxy_eu.tiaas2
     version: 0.0.9
     #- src: https://github.com/usegalaxy-eu/ansible-tiaas2/
