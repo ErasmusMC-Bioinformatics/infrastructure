@@ -23,6 +23,10 @@ pulsar_uwsgi_options:
   buffer-size: 32768
 
 pulsar_yaml_config:
+  managers:
+    _default_:
+      type: queued_python
+      num_concurrent_jobs: 1
   private_token: "{{ pulsar_token }}"
   staging_directory: "{{ pulsar_staging_dir }}"
   persistence_directory: "{{ pulsar_persistence_dir }}"
