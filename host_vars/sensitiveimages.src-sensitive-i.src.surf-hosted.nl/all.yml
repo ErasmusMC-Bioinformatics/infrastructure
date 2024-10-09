@@ -61,3 +61,6 @@ postgresql_objects_privileges:
 postgresql_backup_dir: /data/xnat-data/postgres/
 
 golang_gopath: /data/xnat-data/golang/
+
+condor_host: "localhost"
+condor_allow_write: "localhost"

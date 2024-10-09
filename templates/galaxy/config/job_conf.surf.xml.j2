@@ -3,7 +3,7 @@
 		<plugin id="local_plugin" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner"/>
 		<plugin id="condor" type="runner" load="galaxy.jobs.runners.condor:CondorJobRunner"/>
 	</plugins>
-	<destinations default="condor_8">
+	<destinations default="condor_16">
 		<destination id="local_destination" runner="local_plugin"/>
 		<destination id="local_condor" runner="condor" />
 		<destination id="condor_1x1" runner="condor">
@@ -12,20 +12,15 @@
 		</destination>
 
 		<destination id="condor_8" runner="condor">
-			<param id="request_cpus">1</param>
-			<param id="request_memory">6GB</param>
+			<param id="request_cpus">2</param>
+			<param id="request_memory">8GB</param>
+		</destination>
+		<destination id="condor_16" runner="condor">
+			<param id="request_cpus">4</param>
+			<param id="request_memory">15GB</param>
 		</destination>
 	</destinations>
 	<tools>
-		<tool id="fastqc" destination="condor_8"/>
-		<tool id="shovill" destination="condor_8"/>
-		<tool id="flye" destination="condor_8"/>
-		<tool id="canu" destination="condor_8"/>
-		<tool id="bowtie2" destination="condor_8"/>
-		<tool id="rna_star" destination="condor_8"/>
-		<tool id="vardict_java" destination="condor_8"/>
-		<tool id="trim_galore" destination="condor_8"/>
-		<tool id="goseq" destination="condor_1x1"/>
 		<tool id="emc-ggupset" destination="condor_1x1"/>
 		<tool id="emc-unique_on_columns" destination="condor_1x1"/>
 		<tool id="emc-edger" destination="condor_1x1"/>
