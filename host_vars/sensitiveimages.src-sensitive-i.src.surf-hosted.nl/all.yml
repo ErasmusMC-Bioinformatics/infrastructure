@@ -64,3 +64,91 @@ golang_gopath: /data/xnat-data/golang/
 
 condor_host: "localhost"
 condor_allow_write: "localhost"
+
+galaxy_config:
+  galaxy:
+    brand: "{{ galaxy_brand }}"
+    logo_src: "https://www.erasmusmc.nl/-/media/erasmusmc/images/_platform/logos/full-colour-svg-main-brand-responsive-1-4.svg"
+    themes_config_file: "{{ galaxy_config_dir }}/themes.yml"
+    # Main Configuration
+    admin_users:
+    - e.rasche@erasmusmc.nl
+    database_connection: "postgresql:///galaxy?host=/var/run/postgresql"
+    file_path: "{{ galaxy_data_directory }}"
+    check_migrate_tools: false
+    tool_data_path: "{{ galaxy_mutable_data_dir }}/tool-data"
+    data_dir: "{{ galaxy_mutable_data_dir }}" # I think this is fixed in more recent role versions.
+    job_config_file: "{{ galaxy_config_dir }}/job_conf.xml"
+    id_secret: "{{ vault_id_secret }}"
+    tool_data_table_config_path: /cvmfs/data.galaxyproject.org/byhand/location/tool_data_table_conf.xml,/cvmfs/data.galaxyproject.org/managed/location/tool_data_table_conf.xml
+    object_store_store_by: uuid
+    allow_user_creation: "{{ galaxy_enable_registration }}"
+    require_login: true
+    trs_servers_config_file: "{{ galaxy_config_dir }}/trs_servers_conf.yml"
+    aws_estimate: true
+    job_working_directory: "{{ galaxy_data_directory }}/jobs"
+    database_engine_option_server_side_cursors: true
+    slow_query_log_threshold: 5
+    enable_per_request_sql_debugging: true
+    enable_notification_system: true
+    # File serving Performance
+    nginx_x_accel_redirect_base: /_x_accel_redirect
+
+    watch_job_rules: 'polling'
+    allow_path_paste: true
+    sanitize_all_html: false
+    serve_xss_vulnerable_mimetypes: true
+    library_import_dir: /data/library
+    enable_quotas: true
+    show_welcome_with_login: true
+    expose_user_name: true
+    #conda_exec: '{{ miniconda_prefix }}/bin/mamba'
+    expose_dataset_path: true
+    expose_potentially_sensitive_job_metrics: true
+    # NFS workarounds
+    retry_job_output_collection: 3
+    # Debugging
+    cleanup_job: always
+    allow_user_deletion: true
+    allow_user_impersonation: true
+    user_preferences_extra_conf_path: "{{ galaxy_config_dir }}/user_preferences.yml"
+    # Tool security
+    # outputs_to_working_directory: true # Does not work with pulsar.
+    new_user_dataset_access_role_default_private: true # Make datasets private by default
+    # oidc
+    enable_oidc: true
+    oidc_config_file: "{{ galaxy_config_dir }}/oidc_config.xml"
+    oidc_backends_config_file: "{{ galaxy_config_dir }}/oidc_backends_config.xml"
+    file_sources_config_file: "{{ galaxy_config_dir }}/file_sources.yml"
+    # FTP
+    ftp_upload_dir: "{{ galaxy_data_directory }}/uploads"
+    ftp_upload_site: "{{ inventory_hostname }}"
+    # Error reporting
+    error_report_file: "{{ galaxy_config_dir }}/error_report.yml"
+    new_file_path: "{{ galaxy_data_directory }}/new"
+  gravity:
+    process_manager: systemd
+    galaxy_root: "{{ galaxy_root }}/server"
+    galaxy_user: "{{ galaxy_user_name }}"
+    virtualenv: "{{ galaxy_venv_dir }}"
+    gunicorn:
+      # listening options
+      bind: "unix:{{ galaxy_mutable_config_dir }}/gunicorn.sock"
+      # performance options
+      workers: 2
+      # Other options that will be passed to gunicorn
+      # This permits setting of 'secure' headers like REMOTE_USER (and friends)
+      # https://docs.gunicorn.org/en/stable/settings.html#forwarded-allow-ips
+      extra_args: '--forwarded-allow-ips="*"'
+      # This lets Gunicorn start Galaxy completely before forking which is faster.
+      # https://docs.gunicorn.org/en/stable/settings.html#preload-app
+      preload: true
+    celery:
+      concurrency: 2
+      loglevel: DEBUG
+    handlers:
+      handler:
+        processes: 2
+        pools:
+          - job-handlers
+          - workflow-schedulers

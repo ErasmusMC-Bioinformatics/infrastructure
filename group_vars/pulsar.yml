@@ -25,8 +25,8 @@ pulsar_uwsgi_options:
 pulsar_yaml_config:
   managers:
     _default_:
-      type: queued_python
-      num_concurrent_jobs: 1
+      type: queued_condor
+      submit_request_memory: 85
   private_token: "{{ pulsar_token }}"
   staging_directory: "{{ pulsar_staging_dir }}"
   persistence_directory: "{{ pulsar_persistence_dir }}"
