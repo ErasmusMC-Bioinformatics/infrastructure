@@ -11,7 +11,7 @@ galaxy_user: {name: galaxy, shell: /bin/bash}
 galaxy_commit_id: release_24.0
 galaxy_config_style: yaml
 galaxy_force_checkout: true
-galaxy_manage_systemd: yes
+# galaxy_manage_systemd: yes
 
 # Variables to enable overriding
 galaxy_data_directory: /data/galaxy
