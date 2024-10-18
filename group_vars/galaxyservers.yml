@@ -196,6 +196,8 @@ nginx_conf_http:
       image/svg+xml
       image/x-icon
 
+certbot_well_known_root: /srv/nginx/_well-known_root
+
 # HTCondor
 condor_host: "{{ inventory_hostname }}"
 condor_allow_write: "{{ inventory_hostname }},bioinf-galactus,bioinf-galaxian,*"
