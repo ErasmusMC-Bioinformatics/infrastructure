@@ -23,7 +23,7 @@ galaxy_tool_dependency_dir: "{{ galaxy_mutable_data_dir }}/dependencies"
 # miniconda
 miniconda_prefix: "{{ galaxy_tool_dependency_dir }}/_conda"
 miniconda_version: latest
-miniconda_channels: ['conda-forge', 'defaults']
+miniconda_channels: ['conda-forge', 'bioconda']
 
 # Galaxy Job Configuration
 galaxy_job_config:
