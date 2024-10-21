@@ -13,6 +13,11 @@ certbot_domains:
  - "{{ inventory_hostname }}"
 certbot_agree_tos: --agree-tos
 
+nginx_servers:
+  - redirect-nossl
+nginx_ssl_servers:
+  - galaxy-nossl
+
 
 # Proftpd:
 proftpd_galaxy_auth: yes
