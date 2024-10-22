@@ -60,3 +60,6 @@ golang_gopath: '/opt/workspace-go'
 # Singularity target version
 singularity_version: "3.7.0"
 singularity_go_path: "{{ golang_install_dir }}"
+
+# Chrony
+chrony_pool: nl.pool.ntp.org prefer iburst
